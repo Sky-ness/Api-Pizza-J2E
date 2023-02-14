@@ -7,15 +7,15 @@ import java.io.PrintWriter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.IngredientsDao;
+import dao.IngredientDAO;
 import dao.PizzaDao;
 import dto.Ingredient;
+import dto.Pizza;
 @WebServlet("/Pizza/*")
 public class PizzaRestApi extends MyServlet{
 
@@ -46,7 +46,7 @@ public class PizzaRestApi extends MyServlet{
 				if (i>dao.findAll().size()) {
 					res.sendError(404);
 				}
-				jsonString = objectMapper.writeValueAsString(dao.find(i));
+				jsonString = objectMapper.writeValueAsString(dao.findByID(i));
 			}catch (Exception e) {
 				res.sendError(404);
 			}
@@ -66,20 +66,41 @@ public class PizzaRestApi extends MyServlet{
 		while ((line = reader.readLine()) != null) {
 			data.append(line);
 		}
-		Ingredient i = objectMapper.readValue(data.toString(), Ingredient.class);
-		if(dao.find(i.getId()) != null) {
+		Pizza p = objectMapper.readValue(data.toString(), Pizza.class);
+		if(dao.findByID(p.getId()) != null) {
 			res.sendError(409);	
 		}
 		else {
-			dao.save(i);	
+			dao.save(p);	
 		}
 		out.println(data);
 
 	}
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
+		res.setContentType("application/json;charset=UTF-8");
+		StringBuilder data = new StringBuilder();
+		BufferedReader reader = req.getReader();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			data.append(line);
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+
+			Pizza pizza = mapper.readValue(data.toString(), Pizza.class);
+			if (dao.findByID(pizza.getId()) != null) {
+				dao.deleteById(pizza.getId());
+			} else {
+				res.sendError(409);
+			}
+
+		} catch (Exception e) {
+			res.sendError(409);
+		}
 
 	}
 	@Override
