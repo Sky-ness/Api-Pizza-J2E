@@ -26,6 +26,7 @@ public class PizzaRestApi extends MyServlet{
 		dao = new PizzaDao();
 		System.out.println("Démarrage de la servlet");
 	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json;charset=UTF-8");
