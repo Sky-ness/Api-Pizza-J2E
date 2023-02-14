@@ -3,9 +3,9 @@ package controleurs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +18,14 @@ import dto.Ingredient;
 
 @WebServlet("/ingredient/*")
 public class IngredientRestAPI extends HttpServlet {
+	
+	IngredientDAO ingrDao ;
+	
+	public void init(ServletConfig config) throws ServletException{
+		super.init(config);
+		ingrDao = new IngredientDAO();
+		System.out.println("Démarrage de la servlet");
+	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setContentType("application/json;charset=UTF-8");
@@ -26,7 +34,6 @@ public class IngredientRestAPI extends HttpServlet {
 		String[] parts = null;
 		String jsonstring = null;
 		ObjectMapper mapper = new ObjectMapper();
-		IngredientDAO ingrDao = new IngredientDAO();
 		if (info != null) {
 			parts = info.split("/");
 			if (parts.length > 2) {
@@ -65,7 +72,6 @@ public class IngredientRestAPI extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		PrintWriter out = res.getWriter();
-		IngredientDAO ingrDao = new IngredientDAO();
 		res.setContentType("application/json;charset=UTF-8");
 		StringBuilder data = new StringBuilder();
 		BufferedReader reader = req.getReader();
@@ -93,7 +99,6 @@ public class IngredientRestAPI extends HttpServlet {
 
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		PrintWriter out = res.getWriter();
-		IngredientDAO ingrDao = new IngredientDAO();
 		res.setContentType("application/json;charset=UTF-8");
 		StringBuilder data = new StringBuilder();
 		BufferedReader reader = req.getReader();

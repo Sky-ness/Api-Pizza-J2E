@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,21 @@ import dto.Ingredient;
 public class IngredientDAO {
 	
 
+	protected Connection con;
+
+	public IngredientDAO() {
+		super();
+		try {
+			Class.forName("org.postgresql.Driver");
+			con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public Ingredient findByID(int id) {
 		try {
 			Ingredient res = new Ingredient();
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
 			String query = "SELECT * from ingredients where id=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
@@ -54,8 +65,6 @@ public class IngredientDAO {
 	public String findByIDAndName(int id, String name) {
 		try {
 			Ingredient res = new Ingredient();
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
 			String query = "SELECT * from ingredients where id=? and name=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
@@ -77,8 +86,6 @@ public class IngredientDAO {
 	public List<Ingredient> findAll() {
 		try {
 			List<Ingredient> res = new ArrayList<>();
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
 			String query = "SELECT * from ingredients";
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
@@ -98,9 +105,6 @@ public class IngredientDAO {
 	
 	public Ingredient save(Ingredient ingr) {
 		try {
-			
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
 			String query = "INSERT INTO ingredients VALUES (?, ?)";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, ingr.getId());

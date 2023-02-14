@@ -9,7 +9,7 @@ public class Pizza {
 	@JsonProperty
 	private String name;
 	@JsonProperty
-	private int id;
+	private int idP;
 	@JsonProperty
 	private String typePate;
 	@JsonProperty
@@ -21,16 +21,17 @@ public class Pizza {
 		super();
 	}
 	
-	public Pizza(String nom, String typePate, double prixBase,List<Ingredient> ingredients) {
+	public Pizza(String name, int id, String typePate, double prixBase,List<Ingredient> ingredients) {
 		super();
-		this.name = nom;
+		this.name = name;
+		this.idP = id;
 		this.typePate = typePate;
 		this.prixBase = prixBase;
 		this.ingredients = ingredients;
 	}
 
 	public int getId() {
-		return id;
+		return idP;
 	}
 	public String getName() {
 		return name;
@@ -46,7 +47,7 @@ public class Pizza {
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		this.idP = id;
 	}
 	public void setName(String nom) {
 		this.name = nom;
@@ -63,7 +64,7 @@ public class Pizza {
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Pizza [name=" + name + ", typePate=" + typePate + ", prixBase=" + prixBase + "]";
