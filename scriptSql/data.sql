@@ -1,6 +1,4 @@
-drop table if exists ingredients;
 
-create table ingredients (id int, name text, prix float);
 
 INSERT INTO ingredients values
 (1,'pomme de terre',0.8),

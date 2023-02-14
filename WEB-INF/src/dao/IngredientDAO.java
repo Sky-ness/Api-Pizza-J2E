@@ -10,6 +10,7 @@ import java.util.List;
 import dto.Ingredient;
 
 public class IngredientDAO {
+	
 
 	public Ingredient findByID(int id) {
 		try {
