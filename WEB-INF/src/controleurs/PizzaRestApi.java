@@ -16,17 +16,18 @@ import dao.IngredientDAO;
 import dao.PizzaDao;
 import dto.Ingredient;
 import dto.Pizza;
-@WebServlet("/Pizza/*")
-public class PizzaRestApi extends MyServlet{
 
-	PizzaDao dao ;
-	
-	public void init(ServletConfig config) throws ServletException{
+@WebServlet("/Pizza/*")
+public class PizzaRestApi extends MyServlet {
+
+	PizzaDao dao;
+
+	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		dao = new PizzaDao();
 		System.out.println("Démarrage de la servlet");
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json;charset=UTF-8");
@@ -35,25 +36,40 @@ public class PizzaRestApi extends MyServlet{
 
 		String info = req.getPathInfo();
 		String jsonString = null;
-		if(info == null) {
-			jsonString = objectMapper.writeValueAsString(dao.findAll());	
-		}
-		else{
+		if (info == null) {
+			jsonString = objectMapper.writeValueAsString(dao.findAll());
+		} else {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
-			try {
-				int i = Integer.valueOf(param1);
-				if (i>dao.findAll().size()) {
+			if (parts.length > 2 && parts[2].equals("prixfinal")) {
+				try {
+					int i = Integer.valueOf(parts[1]);
+					if (dao.findByID(i) != null) {
+						jsonString = objectMapper.writeValueAsString(dao.findByIdPrix(i));
+					} else {
+						res.sendError(404);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					int i = Integer.valueOf(param1);
+					if (dao.findByID(i) != null)
+						jsonString = objectMapper.writeValueAsString(dao.findByID(i));
+					else
+						res.sendError(404);
+
+				} catch (Exception e) {
 					res.sendError(404);
 				}
-				jsonString = objectMapper.writeValueAsString(dao.findByID(i));
-			}catch (Exception e) {
-				res.sendError(404);
 			}
 		}
 		out.println(jsonString);
 		out.close();
+
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json;charset=UTF-8");
@@ -66,47 +82,59 @@ public class PizzaRestApi extends MyServlet{
 		while ((line = reader.readLine()) != null) {
 			data.append(line);
 		}
-		Pizza p = objectMapper.readValue(data.toString(), Pizza.class);
-		if(dao.findByID(p.getId()) != null) {
-			res.sendError(409);	
+		String info = req.getPathInfo();
+		String[] parts = null;
+		parts = info.split("/");
+		Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
+		if (dao.findByID(Integer.valueOf(parts[1])) == null) {
+			res.sendError(409);
+		} else {
+			dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
 		}
-		else {
-			dao.save(p);	
-		}
-		out.println(data);
 
 	}
+
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		PrintWriter out = res.getWriter();
 		res.setContentType("application/json;charset=UTF-8");
-		StringBuilder data = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			data.append(line);
-		}
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-
-			Pizza pizza = mapper.readValue(data.toString(), Pizza.class);
-			if (dao.findByID(pizza.getId()) != null) {
-				dao.deleteById(pizza.getId());
-			} else {
+		String info = req.getPathInfo();
+		String[] parts = null;
+		parts = info.split("/");
+		if(parts.length > 2) {
+			try {
+				int idP = Integer.valueOf(parts[1]);
+				int id = Integer.valueOf(parts[2]);
+				if(dao.checkPizzaIngredients(idP,id)) {
+					dao.deletePizzaIngredientById(idP, id);					
+				}else {
+					res.sendError(409);
+				}
+			}catch(Exception e) {
 				res.sendError(409);
 			}
-
-		} catch (Exception e) {
-			res.sendError(409);
+		}else {
+			
+			try {
+				int i = Integer.valueOf(parts[1]);
+				if (dao.findByID(i) != null) {
+					dao.deletePizzaById(i);
+				} else {
+					res.sendError(409);
+				}
+				
+			} catch (Exception e) {
+				res.sendError(409);
+			}
 		}
 
+
 	}
+
 	@Override
 	public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

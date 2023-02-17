@@ -30,3 +30,8 @@ INSERT INTO ingredients values
 (27,'fromage',0.85),
 (28,'parmesan',0.7),
 (29,'brie',0.9);
+
+INSERT INTO pizza VALUES(1,'pizzaTest','Crousti',1.5);
+
+INSERT INTO pizzaingredients VALUES(1,1),
+(2,1);

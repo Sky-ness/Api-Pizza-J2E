@@ -100,20 +100,16 @@ public class IngredientRestAPI extends HttpServlet {
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		PrintWriter out = res.getWriter();
 		res.setContentType("application/json;charset=UTF-8");
-		StringBuilder data = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			data.append(line);
-		}
-
-		ObjectMapper mapper = new ObjectMapper();
+	
 
 		try {
-
-			Ingredient ingr = mapper.readValue(data.toString(), Ingredient.class);
-			if (ingrDao.findByID(ingr.getId()) != null) {
-				ingrDao.deleteById(ingr.getId());
+			String info = req.getPathInfo();
+			String[] parts = null;
+			parts = info.split("/");
+			int i = Integer.valueOf(parts[1]);
+			
+			if (ingrDao.findByID(i) != null) {
+				ingrDao.deleteById(i);
 			} else {
 				res.sendError(409);
 			}

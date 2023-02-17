@@ -9,7 +9,7 @@ public class Pizza {
 	@JsonProperty
 	private String name;
 	@JsonProperty
-	private int idP;
+	private int id;
 	@JsonProperty
 	private String typePate;
 	@JsonProperty
@@ -24,14 +24,14 @@ public class Pizza {
 	public Pizza(String name, int id, String typePate, double prixBase,List<Ingredient> ingredients) {
 		super();
 		this.name = name;
-		this.idP = id;
+		this.id = id;
 		this.typePate = typePate;
 		this.prixBase = prixBase;
 		this.ingredients = ingredients;
 	}
 
 	public int getId() {
-		return idP;
+		return id;
 	}
 	public String getName() {
 		return name;
@@ -47,7 +47,7 @@ public class Pizza {
 	}
 	
 	public void setId(int id) {
-		this.idP = id;
+		this.id = id;
 	}
 	public void setName(String nom) {
 		this.name = nom;
