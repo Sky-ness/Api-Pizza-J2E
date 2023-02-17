@@ -16,7 +16,6 @@ public class IngredientDAO {
 	protected Connection con;
 
 	public IngredientDAO() {
-		super();
 		try {
 			Class.forName("org.postgresql.Driver");
 			con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");

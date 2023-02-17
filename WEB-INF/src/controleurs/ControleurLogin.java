@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.UserDao;
-@WebServlet("/basicAuthentification")
+@WebServlet("/users/token")
 public class ControleurLogin extends HttpServlet{
 
 	/*
