@@ -181,6 +181,7 @@ public class PizzaDao {
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, id);
 			ps.setInt(2, idP);
+			ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
