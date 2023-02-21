@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 public class UserDao {

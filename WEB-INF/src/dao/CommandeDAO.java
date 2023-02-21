@@ -1,11 +1,11 @@
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
 import dto.Commande;
-import dto.Ingredient;
 
 public class CommandeDAO {
 

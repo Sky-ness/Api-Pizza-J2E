@@ -35,3 +35,5 @@ INSERT INTO pizza VALUES(1,'pizzaTest','Crousti',1.5);
 
 INSERT INTO pizzaingredients VALUES(1,1),
 (2,1);
+
+Insert into users values('Jean','1234'),('Benoit','1234'),('Antonin','1234'),('Mehdi','1234'),('Gwenael','1234'),('Cedric','1234');
