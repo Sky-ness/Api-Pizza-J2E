@@ -1,6 +1,4 @@
-
-
-INSERT INTO ingredients values
+INSERT INTO ingredient values
 (1,'pomme de terre',0.8),
 (2,'oignons',0.5),
 (3,'poivrons',0.6),
@@ -31,9 +29,59 @@ INSERT INTO ingredients values
 (28,'parmesan',0.7),
 (29,'brie',0.9);
 
-INSERT INTO pizza VALUES(1,'pizzaTest','Crousti',1.5);
+INSERT INTO pizza VALUES
+(1,'Margarita','Napolitaine',1.5),
+(2,'Pesto','Romaine',2),
+(3,'4Fromage','Chicago',1.75),
+(4,'Reine','Napolitaine',1.5),
+(5,'4Saison','Crousti',2.25),
+(6,'Sicilienne','Foccacia',2),
+(7,'Calzone','Napolitaine',1.5),
+(8,'Peperonni','Romaine',2);
 
-INSERT INTO pizzaingredients VALUES(1,1),
-(2,1);
+INSERT INTO pizzaingredients VALUES
+(1,10),
+(1,24),
+(1,4),
+(3,24),
+(3,25),
+(3,26),
+(3,28),
+(4,6),
+(4,10),
+(4,16),
+(4,24);
 
-Insert into users values('Jean','1234'),('Benoit','1234'),('Antonin','1234'),('Mehdi','1234'),('Gwenael','1234'),('Cedric','1234');
+Insert into commande values
+('1','2023-01-25'),
+('2','2023-01-23'),
+('3','2023-01-30'),
+('4','2023-01-29'),
+('5','2023-01-28'),
+('6','2023-01-25'),
+('7','2023-01-30'),
+('8','2023-01-28'),
+('9','2023-02-01'),
+('10','2023-02-03'),
+('11','2023-01-27');
+
+Insert into users values
+('1','Jean','1234'),
+('2','Benoit','1234'),
+('3','Antonin','1234'),
+('4','Mehdi','1234'),
+('5','Gwenael','1234'),
+('6','Cedric','1234');
+
+Insert into commandepizzas values
+('1','2','1'),
+('2','2','1'),
+('3','2','3'),
+('4','1','3'),
+('5','1','1'),
+('6','4','4'),
+('7','6','3'),
+('8','5','1'),
+('9','1','4'),
+('10','3','3');
+

@@ -28,13 +28,12 @@ public class PizzaDao {
 	
 	public List<Pizza> findAll() {
 		try {
-			PizzaDao dao = new PizzaDao();
 			List<Pizza> pizzas = new ArrayList<>();
 			String query = "SELECT * FROM pizza";
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				pizzas.add(dao.findByID(rs.getInt("idP")));
+				pizzas.add(this.findByID(rs.getInt("idP")));
 			}
 			return pizzas;
 		}catch(Exception e) {
@@ -91,8 +90,7 @@ public class PizzaDao {
 	}
 
 	public Double findByIdPrix(int id) {
-			PizzaDao dao = new PizzaDao();
-			Pizza p = dao.findByID(id);
+			Pizza p = this.findByID(id);
 			double res = 0;
 			for(Ingredient ingredient : p.getIngredients()) {
 				res += ingredient.getPrix();

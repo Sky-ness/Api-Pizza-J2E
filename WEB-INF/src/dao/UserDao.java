@@ -23,32 +23,7 @@ public class UserDao {
 		}
 	}
 
-//	public boolean veriftoken(HttpServletRequest req) {
-//		String connect = req.getHeader("Authorization");
-//		Decoder decoder = Base64.getDecoder();
-//		if(!connect.isBlank() && connect.startsWith("Basic") || !connect.isEmpty() && connect.startsWith("Basic")) {
-//			String[] split = connect.split(" ");	
-//
-//			String data = new String(decoder.decode(split[1]));
-//			String[] loginMdp = data.split(":");
-//			String query = "Select * from users where login=? AND pwd=?";
-//			try {
-//				PreparedStatement ps = con.prepareStatement(query);
-//				ps.setString(1, loginMdp[0]);
-//				ps.setString(2, loginMdp[1]);
-//				ResultSet rs = ps.executeQuery();
-//				if (rs.next()) {
-//					return true;
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return false;
-//
-//	}
-
-	public boolean veriftoken(HttpServletRequest req) {
+	public boolean login(HttpServletRequest req) {
 	String login = req.getParameter("login");
 	String password = req.getParameter("password");
 	Decoder decoder = Base64.getDecoder();
@@ -75,5 +50,30 @@ public class UserDao {
 		String encode = login+":"+mdp;
 		String token = Base64.getEncoder().encodeToString(encode.getBytes());
 		return token;		
+	}
+	
+	public boolean verifTokenApi(HttpServletRequest req) {
+		String connect = req.getHeader("Authorization");
+		Decoder decoder = Base64.getDecoder();
+		if(!connect.isBlank() && connect.startsWith("Basic") || !connect.isEmpty() && connect.startsWith("Basic")) {
+			String[] split = connect.split(" ");
+
+			String data = new String(decoder.decode(split[1]));
+			String[] loginMdp = data.split(":");
+			String query = "Select * from users where login=? AND pwd=?";
+			try {
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setString(1, loginMdp[0]);
+				ps.setString(2, loginMdp[1]);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+
 	}
 }

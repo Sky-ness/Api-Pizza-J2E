@@ -17,7 +17,7 @@ import dao.PizzaDao;
 import dto.Ingredient;
 import dto.Pizza;
 
-@WebServlet("/Pizza/*")
+@WebServlet("/pizza/*")
 public class PizzaRestApi extends MyServlet {
 
 	PizzaDao dao;

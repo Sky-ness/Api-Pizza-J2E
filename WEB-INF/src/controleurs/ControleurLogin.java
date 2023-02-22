@@ -28,7 +28,7 @@ public class ControleurLogin extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		PrintWriter out = res.getWriter();
-		if(users.veriftoken(req)) {
+		if(users.login(req)) {
 			String token = users.createToken(req);
 			out.println("Votre token est : "+token);
 		}

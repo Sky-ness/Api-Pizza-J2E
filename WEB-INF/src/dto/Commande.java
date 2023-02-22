@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Commande {
+	
+	
 	@JsonProperty
 	private int id;
 	@JsonProperty
@@ -28,8 +30,8 @@ public class Commande {
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int idU) {
+		this.id = idU;
 	}
 	public Date getDate() {
 		return date;
