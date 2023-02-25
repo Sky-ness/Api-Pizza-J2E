@@ -18,7 +18,7 @@ import dto.Ingredient;
 import dto.Pizza;
 
 @WebServlet("/pizza/*")
-public class PizzaRestApi extends MyServlet {
+public class PizzaRestApi extends Patch {
 
 	PizzaDao dao;
 

@@ -18,11 +18,12 @@ import dto.Ingredient;
 
 @WebServlet("/commande/*")
 public class CommandeRestAPI extends HttpServlet{
+
 	CommandeDAO dao ;
 
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
-		dao = new CommandeDAO();
+		this.dao = new CommandeDAO();
 		System.out.println("Démarrage de la servlet");
 	}
 
@@ -34,21 +35,31 @@ public class CommandeRestAPI extends HttpServlet{
 		String info = req.getPathInfo();
 		String jsonString = null;
 		if (info == null) {
-			jsonString = objectMapper.writeValueAsString(dao.findAll());
+			jsonString = objectMapper.writeValueAsString(this.dao.findAll());
 		} else {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			try {
 				int i = Integer.valueOf(param1);
 				if (dao.findByID(i) != null)
-					jsonString = objectMapper.writeValueAsString(dao.findByID(i));
+					jsonString = objectMapper.writeValueAsString(this.dao.findByID(i));
 				else
 					res.sendError(404);
-
 			} catch (Exception e) {
 				res.sendError(404);
 			}
-
+			if(parts.length == 3) {
+				try {
+					String param2 = parts[2];
+					int i = Integer.valueOf(param1);
+					if (param2.equals("prixfinal"))
+						jsonString = objectMapper.writeValueAsString(this.dao.cost(this.dao.findByID(i)));
+					else
+						res.sendError(404);
+				} catch (Exception e) {
+					res.sendError(404);
+				}
+			}
 		}
 		out.println(jsonString);
 		out.close();

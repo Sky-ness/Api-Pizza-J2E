@@ -22,7 +22,7 @@ public class CommandeDAO {
 		try {
 			Class.forName("org.postgresql.Driver");
 			con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
-			pizzaDao = new PizzaDao();
+			this.pizzaDao = new PizzaDao();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,7 +64,7 @@ public class CommandeDAO {
 				ps2.setInt(1, c.getId());
 				ResultSet rs2 = ps2.executeQuery();
 				while(rs2.next()) {
-					Pizza res = pizzaDao.findByID(id);
+					Pizza res = this.pizzaDao.findByID(id);
 					pizzas.add(res);
 				}
 				c.setPizzas(pizzas);
@@ -89,11 +89,15 @@ public class CommandeDAO {
 		}
 	}
 	public double cost(Commande commande) {
+		double prixFinal=0.0;
 		try {
-			return 0.0;
+			for(Pizza p:commande.getPizzas()) {
+				prixFinal+= this.pizzaDao.findByIdPrix(p.getId());
+			}
+			return prixFinal;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0.0;
+			return -1.0;
 		}
 	}
 }

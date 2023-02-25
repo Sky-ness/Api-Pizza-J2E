@@ -1,1 +1,4 @@
-<Context reloadable="true" />
+<Context reloadable="true"/><!-- path="/sae_pizza">
+<Realm className="org.apache.catalina.realm.MemoryRealm"
+pathname="webapps/memoryAuthent/META-INF/utilisateurs.xml" />
+</Context>-->

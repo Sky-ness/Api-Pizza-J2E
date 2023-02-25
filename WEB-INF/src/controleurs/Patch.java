@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public abstract class MyServlet extends HttpServlet {
+public abstract class Patch extends HttpServlet {
 
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
