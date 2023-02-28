@@ -179,8 +179,8 @@ public class PizzaDao {
 		try {
 			String query = "INSERT INTO pizzaingredients values(?,?)";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, id);
-			ps.setInt(2, idP);
+			ps.setInt(1, idP);
+			ps.setInt(2, id);
 			ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
