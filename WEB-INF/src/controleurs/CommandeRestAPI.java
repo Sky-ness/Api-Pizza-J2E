@@ -1,5 +1,6 @@
 package controleurs;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,6 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.CommandeDAO;
 import dao.UserDao;
+import dto.Commande;
+import dto.Ingredient;
+import dto.Pizza;
 
 @WebServlet("/commande/*")
 public class CommandeRestAPI extends HttpServlet{
@@ -67,8 +71,30 @@ public class CommandeRestAPI extends HttpServlet{
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json;charset=UTF-8");
 		if(protect.verifTokenApi(req)) {
-			
-		}else res.sendError(401);
+			ObjectMapper objectMapper = new ObjectMapper();
+			StringBuilder data = new StringBuilder();
+			BufferedReader reader = req.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				data.append(line);
+			}
+			String info = req.getPathInfo();
+			String[] parts = null;
+			if(info != null) parts = info.split("/");
+			else {
+				Commande c = objectMapper.readValue(data.toString(), Commande.class);
+				if(dao.findByID(c.getId()) == null) {
+					dao.save(c);
+				}else {
+					res.sendError(409);
+				}
+			}
+		}
+		else {
+			res.sendError(401);
+		}
+
 	}
 }
