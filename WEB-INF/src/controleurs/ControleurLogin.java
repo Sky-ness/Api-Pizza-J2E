@@ -13,13 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDao;
 @WebServlet("/users/token")
 public class ControleurLogin extends HttpServlet{
-
-	/*
-	 * Page qui vérifie la connection
-	 */
 	
 	UserDao users;
-	
+
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
 		users = new UserDao();
