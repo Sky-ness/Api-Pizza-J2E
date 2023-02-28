@@ -64,7 +64,7 @@ public class CommandeDAO {
 				ps2.setInt(1, c.getId());
 				ResultSet rs2 = ps2.executeQuery();
 				while(rs2.next()) {
-					Pizza res = this.pizzaDao.findByID(id);
+					Pizza res = this.pizzaDao.findByID(rs2.getInt("idP"));
 					pizzas.add(res);
 				}
 				c.setPizzas(pizzas);
