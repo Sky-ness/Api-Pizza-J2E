@@ -85,17 +85,28 @@ public class PizzaRestApi extends Patch {
 			}
 			String info = req.getPathInfo();
 			String[] parts = null;
-			parts = info.split("/");
-			Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
-			if (dao.findByID(Integer.valueOf(parts[1])) == null) {
-				res.sendError(409);
-			} else {
-				dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
+			if(info != null) parts = info.split("/");
+			if(parts == null) {
+				Pizza p = objectMapper.readValue(data.toString(), Pizza.class);
+				if(dao.findByID(p.getId()) == null) {
+					dao.save(p);
+				}else {
+					res.sendError(409);
+				}
+			}else {
+				
+				Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
+				if (dao.findByID(Integer.valueOf(parts[1])) == null) {
+					res.sendError(409);
+				} else {
+					dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
+				}
 			}
-		}
-		else {
-			res.sendError(401);
-		}
+			}
+			else {
+				res.sendError(401);
+			}
+		
 	}
 
 	@Override

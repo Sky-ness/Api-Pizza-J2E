@@ -113,22 +113,23 @@ public class PizzaDao {
 		}
 	}
 	
-	public int save(Pizza pizza) {
+	public void save(Pizza pizza) {
 		try {
-			String query = "Insert into Pizza values(?,?,?,?,?)";
+			String query = "Insert into pizza values(?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(query);
-			//TODO a modifier
 			ps.setInt(1, pizza.getId());
 			ps.setString(2, pizza.getName());
-			ps.setString(4, pizza.getTypePate());
-			ps.setDouble(5, pizza.getPrixBase());
-
+			ps.setString(3, pizza.getTypePate());
+			ps.setDouble(4, pizza.getPrixBase());
 			ps.executeUpdate();
-			return 0;
-
+			for(Ingredient ingredient : pizza.getIngredients()) {
+				PizzaDao p = new PizzaDao();
+				p.saveIngredientsPizza(pizza.getId(), ingredient.getId());
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 1;
+			
 		}
 	}
 	public int patchById() {
