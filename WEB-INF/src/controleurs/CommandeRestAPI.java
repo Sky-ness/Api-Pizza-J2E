@@ -1,6 +1,5 @@
 package controleurs;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.CommandeDAO;
-import dto.Ingredient;
+import dao.UserDao;
 
 @WebServlet("/commande/*")
 public class CommandeRestAPI extends HttpServlet{
 
 	CommandeDAO dao ;
+	UserDao protect;
 
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
 		this.dao = new CommandeDAO();
+		this.protect = new UserDao();
 		System.out.println("Démarrage de la servlet");
 	}
 
@@ -66,6 +67,8 @@ public class CommandeRestAPI extends HttpServlet{
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		PrintWriter out = res.getWriter();
+		if(protect.verifTokenApi(req)) {
+			
+		}else res.sendError(401);
 	}
 }

@@ -14,16 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.IngredientDAO;
+import dao.UserDao;
 import dto.Ingredient;
 
 @WebServlet("/ingredient/*")
 public class IngredientRestAPI extends HttpServlet {
-	
-	IngredientDAO ingrDao ;
-	
+
+	IngredientDAO ingrDao;
+	UserDao protect;
+
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
 		ingrDao = new IngredientDAO();
+		protect = new UserDao();
 		System.out.println("Démarrage de la servlet");
 	}
 
@@ -71,52 +74,52 @@ public class IngredientRestAPI extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		PrintWriter out = res.getWriter();
 		res.setContentType("application/json;charset=UTF-8");
-		StringBuilder data = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			data.append(line);
-		}
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-
-			Ingredient ingr = mapper.readValue(data.toString(), Ingredient.class);
-			if (ingrDao.findByID(ingr.getId()) != null) {
-				res.sendError(409);
-			} else {
-				ingrDao.save(ingr);
+		if(protect.verifTokenApi(req)) {
+			StringBuilder data = new StringBuilder();
+			BufferedReader reader = req.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				data.append(line);
 			}
 
-		} catch (Exception e) {
-			res.sendError(409);
-		}
+			ObjectMapper mapper = new ObjectMapper();
+
+			try {
+
+				Ingredient ingr = mapper.readValue(data.toString(), Ingredient.class);
+				if (ingrDao.findByID(ingr.getId()) != null) {
+					res.sendError(409);
+				} else {
+					ingrDao.save(ingr);
+				}
+
+			} catch (Exception e) {
+				res.sendError(409);
+			}
+		}else res.sendError(401);
 
 	}
 
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		PrintWriter out = res.getWriter();
 		res.setContentType("application/json;charset=UTF-8");
-	
 
-		try {
-			String info = req.getPathInfo();
-			String[] parts = null;
-			parts = info.split("/");
-			int i = Integer.valueOf(parts[1]);
-			
-			if (ingrDao.findByID(i) != null) {
-				ingrDao.deleteById(i);
-			} else {
+		if(protect.verifTokenApi(req)) {
+			try {
+				String info = req.getPathInfo();
+				String[] parts = null;
+				parts = info.split("/");
+				int i = Integer.valueOf(parts[1]);
+
+				if (ingrDao.findByID(i) != null) {
+					ingrDao.deleteById(i);
+				} else {
+					res.sendError(409);
+				}
+
+			} catch (Exception e) {
 				res.sendError(409);
 			}
-
-		} catch (Exception e) {
-			res.sendError(409);
-		}
+		}else res.sendError(401);
 	}
-
 }

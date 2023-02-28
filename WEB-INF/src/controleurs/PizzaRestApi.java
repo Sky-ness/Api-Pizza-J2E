@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.IngredientDAO;
 import dao.PizzaDao;
+import dao.UserDao;
 import dto.Ingredient;
 import dto.Pizza;
 
@@ -21,10 +22,12 @@ import dto.Pizza;
 public class PizzaRestApi extends Patch {
 
 	PizzaDao dao;
+	UserDao protect;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		dao = new PizzaDao();
+		this.dao = new PizzaDao();
+		this.protect = new UserDao();
 		System.out.println("Démarrage de la servlet");
 	}
 
@@ -67,73 +70,78 @@ public class PizzaRestApi extends Patch {
 		}
 		out.println(jsonString);
 		out.close();
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json;charset=UTF-8");
-		PrintWriter out = res.getWriter();
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		StringBuilder data = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			data.append(line);
+		if(protect.verifTokenApi(req)) {
+			ObjectMapper objectMapper = new ObjectMapper();
+			StringBuilder data = new StringBuilder();
+			BufferedReader reader = req.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				data.append(line);
+			}
+			String info = req.getPathInfo();
+			String[] parts = null;
+			parts = info.split("/");
+			Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
+			if (dao.findByID(Integer.valueOf(parts[1])) == null) {
+				res.sendError(409);
+			} else {
+				dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
+			}
 		}
-		String info = req.getPathInfo();
-		String[] parts = null;
-		parts = info.split("/");
-		Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
-		if (dao.findByID(Integer.valueOf(parts[1])) == null) {
-			res.sendError(409);
-		} else {
-			dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
+		else {
+			res.sendError(401);
 		}
-
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter out = res.getWriter();
 		res.setContentType("application/json;charset=UTF-8");
-		String info = req.getPathInfo();
-		String[] parts = null;
-		parts = info.split("/");
-		if(parts.length > 2) {
-			try {
-				int idP = Integer.valueOf(parts[1]);
-				int id = Integer.valueOf(parts[2]);
-				if(dao.checkPizzaIngredients(idP,id)) {
-					dao.deletePizzaIngredientById(idP, id);					
-				}else {
+		if(protect.verifTokenApi(req)) {
+			String info = req.getPathInfo();
+			String[] parts = null;
+			parts = info.split("/");
+			if(parts.length > 2) {
+				try {
+					int idP = Integer.valueOf(parts[1]);
+					int id = Integer.valueOf(parts[2]);
+					if(dao.checkPizzaIngredients(idP,id)) {
+						dao.deletePizzaIngredientById(idP, id);					
+					}else {
+						res.sendError(409);
+					}
+				}catch(Exception e) {
 					res.sendError(409);
 				}
-			}catch(Exception e) {
-				res.sendError(409);
-			}
-		}else {
-			
-			try {
-				int i = Integer.valueOf(parts[1]);
-				if (dao.findByID(i) != null) {
-					dao.deletePizzaById(i);
-				} else {
+			}else {
+
+				try {
+					int i = Integer.valueOf(parts[1]);
+					if (dao.findByID(i) != null) {
+						dao.deletePizzaById(i);
+					} else {
+						res.sendError(409);
+					}
+
+				} catch (Exception e) {
 					res.sendError(409);
 				}
-				
-			} catch (Exception e) {
-				res.sendError(409);
 			}
-		}
+		}else res.sendError(401);
 
 
 	}
 
 	@Override
 	public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		res.setContentType("application/json;charset=UTF-8");
+		if(protect.verifTokenApi(req)) {
+			
+		}else res.sendError(401);
 
 	}
 
