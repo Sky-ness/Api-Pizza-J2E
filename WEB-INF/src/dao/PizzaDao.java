@@ -123,8 +123,7 @@ public class PizzaDao {
 			ps.setDouble(4, pizza.getPrixBase());
 			ps.executeUpdate();
 			for(Ingredient ingredient : pizza.getIngredients()) {
-				PizzaDao p = new PizzaDao();
-				p.saveIngredientsPizza(pizza.getId(), ingredient.getId());
+				this.saveIngredientsPizza(pizza.getId(), ingredient.getId());
 			}
 		
 		} catch (Exception e) {
@@ -187,5 +186,6 @@ public class PizzaDao {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

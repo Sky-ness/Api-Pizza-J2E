@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dto.Commande;
@@ -80,14 +81,34 @@ public class CommandeDAO {
 		}
 	}
 
-	public Commande save(Commande commande) {
+	public void save(Commande commande) {
 		try {
-			return null;
+			String query = "Insert into commande values(?,?)";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, commande.getId());
+			ps.setDate(2,  null);
+			ps.executeUpdate();
+			for(Pizza pizza : commande.getPizzas()) {
+				this.savePizzaCommande(commande.getId(), pizza.getId());
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			
 		}
 	}
+	private void savePizzaCommande(int idC, int idP) {
+		try {
+			String query = "INSERT INTO commandepizzas values(?,?)";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, idC);
+			ps.setInt(2, idP);
+			ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public double cost(Commande commande) {
 		double prixFinal=0.0;
 		try {
