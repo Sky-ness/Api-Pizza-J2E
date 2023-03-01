@@ -86,7 +86,8 @@ public class CommandeDAO {
 			String query = "Insert into commande values(?,?)";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, commande.getId());
-			ps.setDate(2,  null);
+			java.sql.Date sqlDate = new java.sql.Date(commande.getDate().getTime());
+			ps.setDate(2, sqlDate);
 			ps.executeUpdate();
 			for(Pizza pizza : commande.getPizzas()) {
 				this.savePizzaCommande(commande.getId(), pizza.getId());
