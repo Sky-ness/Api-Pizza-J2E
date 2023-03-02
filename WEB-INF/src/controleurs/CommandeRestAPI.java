@@ -36,7 +36,7 @@ public class CommandeRestAPI extends HttpServlet{
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		ObjectMapper objectMapper = new ObjectMapper();
-
+		
 		String info = req.getPathInfo();
 		String jsonString = null;
 		if (info == null) {

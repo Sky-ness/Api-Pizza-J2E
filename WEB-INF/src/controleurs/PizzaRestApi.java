@@ -94,7 +94,7 @@ public class PizzaRestApi extends Patch {
 					res.sendError(409);
 				}
 			}else {
-				
+
 				Ingredient p = objectMapper.readValue(data.toString(), Ingredient.class);
 				if (dao.findByID(Integer.valueOf(parts[1])) == null) {
 					res.sendError(409);
@@ -102,11 +102,10 @@ public class PizzaRestApi extends Patch {
 					dao.saveIngredientsPizza(Integer.valueOf(parts[1]), p.getId());
 				}
 			}
-			}
-			else {
-				res.sendError(401);
-			}
-		
+		}else {
+			res.sendError(401);
+		}
+
 	}
 
 	@Override
@@ -132,8 +131,9 @@ public class PizzaRestApi extends Patch {
 
 				try {
 					int i = Integer.valueOf(parts[1]);
-					if (dao.findByID(i) != null) {
-						dao.deletePizzaById(i);
+					if (dao.findByID(i) != null) {;
+					String line;
+					dao.deletePizzaById(i);
 					} else {
 						res.sendError(409);
 					}
@@ -143,16 +143,29 @@ public class PizzaRestApi extends Patch {
 				}
 			}
 		}else res.sendError(401);
-
-
 	}
 
 	@Override
 	public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json;charset=UTF-8");
 		if(protect.verifTokenApi(req)) {
-			
+			String info = req.getPathInfo();
+			String[] parts = null;
+			parts = info.split("/");
+			StringBuilder data = new StringBuilder();
+			BufferedReader reader = req.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				data.append(line);
+			}
+			try {
+				dao.patchById(Integer.valueOf(parts[1]), data.substring(1, data.length()-1).replaceAll("\"",""));
+			} catch (Exception e) {
+				res.sendError(409);
+			}				
 		}else res.sendError(401);
+
+
 
 	}
 

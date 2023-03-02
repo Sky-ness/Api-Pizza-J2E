@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class PizzaDao {
 			try {
 				List<Ingredient> ingredients = new ArrayList<>();
 				query = "SELECT * from pizzaingredients where idp = ?";
-				String query2 = "SELECT * from ingredients where id = ?";
+				String query2 = "SELECT * from ingredient where id = ?";
 				PreparedStatement ps2 = con.prepareStatement(query);
 				ps2.setInt(1, p.getId());
 				ResultSet rs2 = ps2.executeQuery();
@@ -131,8 +132,23 @@ public class PizzaDao {
 			
 		}
 	}
-	public int patchById() {
-		// TODO Auto-generated method stub
+	public int patchById(int id,String value) {
+		String[] table = value.split(":");
+		String update = "Update pizza set "+ table[0] +"=? where idP=?";
+		try {
+			PreparedStatement ps = con.prepareStatement(update);
+			if(table[0].equals("prixBase")) {
+				ps.setDouble(1, Double.valueOf(table[1]));
+			}else ps.setString(1, table[1]);
+			
+			ps.setInt(2, id);
+			System.out.println(ps.toString());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 	
@@ -186,6 +202,4 @@ public class PizzaDao {
 			e.printStackTrace();
 		}
 	}
-
-	
 }
