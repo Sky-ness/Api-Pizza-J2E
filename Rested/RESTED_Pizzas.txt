@@ -1,0 +1,199 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": "RESTED REST Client",
+    "Comment": "An exported collection from RESTED",
+    "entries": [
+      {
+        "request": {
+          "method": "PATCH",
+          "url": "http://localhost:8080/sae_pizza/pizza/1",
+          "headers": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "name",
+                "value": "3fromagio"
+              }
+            ],
+            "text": "name=3fromagio"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/sae_pizza/pizza",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "name",
+                "value": "savoyarde"
+              },
+              {
+                "name": "id",
+                "value": "10"
+              },
+              {
+                "name": "typePate",
+                "value": "Crousti"
+              },
+              {
+                "name": "prixBase",
+                "value": "8.0"
+              },
+              {
+                "name": "ingredients",
+                "value": "[{\"id\": 1},{\"id\": 24},{\"id\":17},{\"id\": 10}]"
+              }
+            ],
+            "text": "name=savoyarde&id=10&typePate=Crousti&prixBase=8.0&ingredients=[{\"id\": 1},{\"id\": 24},{\"id\":17},{\"id\": 10}]"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/pizza/1/prixfinal",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/sae_pizza/pizza/1/10",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/sae_pizza/pizza/1",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "10"
+              }
+            ],
+            "text": "id=10"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/sae_pizza/pizza/3",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/pizza/1",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "30"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "3.0"
+              }
+            ],
+            "text": "id=30&name=sauce savoyarde&prix=3.0"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/pizza",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "30"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "3.0"
+              }
+            ],
+            "text": "id=30&name=sauce savoyarde&prix=3.0"
+          }
+        }
+      }
+    ]
+  }
+}

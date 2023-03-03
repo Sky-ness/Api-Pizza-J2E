@@ -1,0 +1,87 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": "RESTED REST Client",
+    "Comment": "An exported collection from RESTED",
+    "entries": [
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/sae_pizza/commande",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "15"
+              },
+              {
+                "name": "date",
+                "value": "2023-10-23"
+              },
+              {
+                "name": "ingredients",
+                "value": "[{\"id\": 1},{\"id\": 2},{\"id\":3}]"
+              }
+            ],
+            "text": "id=15&date=2023-10-23&ingredients=[{\"id\": 1},{\"id\": 2},{\"id\":3}]"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/commande/1/prixfinal",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/commande/1",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/commande",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      }
+    ]
+  }
+}

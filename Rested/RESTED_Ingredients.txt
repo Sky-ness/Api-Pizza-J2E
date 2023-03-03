@@ -1,0 +1,159 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": "RESTED REST Client",
+    "Comment": "An exported collection from RESTED",
+    "entries": [
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/sae_pizza/ingredient/30",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "30"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "3.0"
+              }
+            ],
+            "text": "id=30&name=sauce savoyarde&prix=3.0"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/sae_pizza/ingredient",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "30"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "3.0"
+              }
+            ],
+            "text": "id=30&name=sauce savoyarde&prix=3.0"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/ingredient/1/pomme de terre",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "69"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "0.4"
+              }
+            ],
+            "text": "id=69&name=sauce savoyarde&prix=0.4"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/ingredient/1",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "69"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "0.4"
+              }
+            ],
+            "text": "id=69&name=sauce savoyarde&prix=0.4"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/sae_pizza/ingredient",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "id",
+                "value": "69"
+              },
+              {
+                "name": "name",
+                "value": "sauce savoyarde"
+              },
+              {
+                "name": "prix",
+                "value": "0.4"
+              }
+            ],
+            "text": "id=69&name=sauce savoyarde&prix=0.4"
+          }
+        }
+      }
+    ]
+  }
+}

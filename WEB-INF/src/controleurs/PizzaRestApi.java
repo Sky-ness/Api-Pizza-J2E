@@ -164,9 +164,6 @@ public class PizzaRestApi extends Patch {
 				res.sendError(409);
 			}				
 		}else res.sendError(401);
-
-
-
 	}
 
 }
