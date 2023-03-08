@@ -27,7 +27,7 @@ public class IngredientDAO {
 	public Ingredient findByID(int id) {
 		try {
 			Ingredient res = new Ingredient();
-			String query = "SELECT * from ingredients where id=?";
+			String query = "SELECT * from ingredient where id=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
 			ResultSet rs = ps.executeQuery();
@@ -49,7 +49,7 @@ public class IngredientDAO {
 		try {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://psqlserv:5432/but2", "benoitmisplonetu", "moi");
-			String query = "Delete from ingredients where id=?";
+			String query = "Delete from ingredient where id=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
 			ps.executeUpdate();
@@ -64,7 +64,7 @@ public class IngredientDAO {
 	public String findByIDAndName(int id, String name) {
 		try {
 			Ingredient res = new Ingredient();
-			String query = "SELECT * from ingredients where id=? and name=?";
+			String query = "SELECT * from ingredient where id=? and name=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
 			ps.setString(2, name);
@@ -85,7 +85,7 @@ public class IngredientDAO {
 	public List<Ingredient> findAll() {
 		try {
 			List<Ingredient> res = new ArrayList<>();
-			String query = "SELECT * from ingredients";
+			String query = "SELECT * from ingredient";
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -104,7 +104,7 @@ public class IngredientDAO {
 	
 	public Ingredient save(Ingredient ingr) {
 		try {
-			String query = "INSERT INTO ingredients VALUES (?, ?)";
+			String query = "INSERT INTO ingredient VALUES (?, ?)";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, ingr.getId());
 			ps.setString(2, ingr.getName());

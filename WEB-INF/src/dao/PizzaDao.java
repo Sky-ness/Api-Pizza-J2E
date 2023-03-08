@@ -103,7 +103,7 @@ public class PizzaDao {
 	
 	public void deleteById(int id) {
 		try {
-			String query = "Delete from ingredients where id=?";
+			String query = "Delete from ingredient where id=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,id);
 			ps.executeUpdate();
